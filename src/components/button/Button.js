@@ -44,14 +44,6 @@ const Container = styled.button`
   :hover {
     ${(p) => backgroundColorHover(p.type, p.disabled)};
   }
-  
-  .visited{
-    transform: translateY(-200%);
-  }
-  
-  .current{
-    transform: translateY(0);
-  }
 `;
 
 // const Label = styled.span`
@@ -83,7 +75,6 @@ const Button = (props) => {
   //   if (index > step) return 'visited';
   //   return '';
   // };
-  console.log(type);
 
   return (
     <Container

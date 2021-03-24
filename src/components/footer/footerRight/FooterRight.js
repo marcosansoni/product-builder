@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 import ButtonType from '../../button/constants/ButtonType';
 import Button from '../../button/Button';
 import Palette from '../../../theme/Palette';
@@ -28,10 +29,35 @@ const IconContainer = styled.div`
 const StyledPrimaryButton = styled(Button)`
   width: 194px;
   display: flex;
-  justify-content: space-between;
 `;
 
-const FooterRight = (props) => {
+const Items = styled.div`
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  span {
+    transition: transform .3s, -webkit-transform .3s;
+  }
+  
+  .incoming{
+    transform: translateY(+250%);
+  }
+  
+  .visited{
+    transform: translateY(-200%);
+  }
+
+  .current{
+    transform: translateY(0);
+  }
+`;
+
+const FooterRight = forwardRef((props, ref) => {
   const { onPrevious, onConfirm, first } = props;
 
   return (
@@ -42,12 +68,16 @@ const FooterRight = (props) => {
         </StyledSecondaryButton>
       )}
       <StyledPrimaryButton onClick={onConfirm}>
-        <span>Ciao</span>
+        <Items ref={ref}>
+          <span>0</span>
+          <span>1</span>
+          <span>2</span>
+        </Items>
         <AngleRightIcon />
       </StyledPrimaryButton>
     </Container>
   );
-};
+});
 
 FooterRight.propTypes = {
   /** Callback when click on back button */

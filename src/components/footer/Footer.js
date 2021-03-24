@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import FooterLeft from './footerLeft/FooterLeft';
 import FooterRight from './footerRight/FooterRight';
 
@@ -14,15 +16,43 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Footer = () => {
-  console.log('Footer');
+const Footer = (props) => {
+  const { step } = props;
+  const buttonRef = useRef();
+
+  useEffect(() => {
+    console.log(buttonRef);
+    Array.from(buttonRef.current?.childNodes).forEach(((node, index) => {
+      node.classList.remove('current');
+      node.classList.remove('incoming');
+      node.classList.remove('visited');
+      if (index === step) {
+        node.classList.add('current');
+      } else if (index > step) {
+        node.classList.add('incoming');
+      } else {
+        node.classList.add('visited');
+      }
+    }));
+    // console.log(Array.from(buttonRef.current?.childNodes)[step].classList.add('current'));
+    // console.log(step);
+  }, [buttonRef, step]);
 
   return (
     <Container>
       <FooterLeft />
-      <FooterRight />
+      <FooterRight ref={buttonRef} />
     </Container>
   );
+};
+
+Footer.propTypes = {
+  /** Step of the checkout */
+  step: PropTypes.number,
+};
+
+Footer.defaultProps = {
+  step: 0,
 };
 
 export default Footer;
