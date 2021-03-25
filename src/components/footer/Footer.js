@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect, useRef } from 'react';
 import FooterLeft from './footerLeft/FooterLeft';
-import FooterRight from './footerRight/FooterRight';
 
 const Container = styled.div`
   height: 100px;
@@ -21,27 +20,17 @@ const Footer = (props) => {
   const buttonRef = useRef();
 
   useEffect(() => {
-    console.log(buttonRef);
-    Array.from(buttonRef.current?.childNodes).forEach(((node, index) => {
-      node.classList.remove('current');
-      node.classList.remove('incoming');
-      node.classList.remove('visited');
-      if (index === step) {
-        node.classList.add('current');
-      } else if (index > step) {
-        node.classList.add('incoming');
-      } else {
-        node.classList.add('visited');
-      }
-    }));
-    // console.log(Array.from(buttonRef.current?.childNodes)[step].classList.add('current'));
-    // console.log(step);
-  }, [buttonRef, step]);
+    if (buttonRef.current) {
+      console.log(buttonRef.current);
+      console.log(`translateY(-${56 * step})`);
+      buttonRef.current.style.transform = `translateY(-${56 * step}px)`;
+    }
+  }, [step, buttonRef]);
 
   return (
     <Container>
       <FooterLeft />
-      <FooterRight ref={buttonRef} />
+      {/* <FooterRight ref={buttonRef} /> */}
     </Container>
   );
 };

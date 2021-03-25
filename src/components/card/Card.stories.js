@@ -1,8 +1,8 @@
-import Footer from './Footer';
+import Card from './Card';
 
 export default {
-  title: 'components/footer',
-  component: Footer,
+  title: 'components/card',
+  component: Card,
   // argTypes: {
   //   imageUrl: {
   //     name: 'status',
@@ -11,11 +11,13 @@ export default {
   //   },
   // },
   args: {
-    step: 0,
+    imageUrl: 'img/i3/product01_col01.jpg',
+    title: 'BMW i3',
+    subtitle: 'from $42.400',
   },
 };
 
-const Template = (args) => <Footer {...args} />;
+const Template = (args) => <Card {...args} />;
 
 export const Default = Template.bind({});
-Default.storyName = 'Footer';
+Default.storyName = 'Card';

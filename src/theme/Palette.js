@@ -6,7 +6,9 @@ const Palette = {
   GRAY: '#5d7c89',
   GRAY_TRANSPARENT: 'rgba(93, 124, 137, 0.5)',
   GRAY_LIGHT: '#e1e1e1',
+  GRAY_LIGHT_VARIANT: '#ededed',
   GRAY_SUPER_LIGHT: '#f2f2f2',
+  TRANSPARENT: 'transparent',
 };
 
 export default Palette;

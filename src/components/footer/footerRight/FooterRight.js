@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
+import { useRef } from 'react';
 import ButtonType from '../../button/constants/ButtonType';
 import Button from '../../button/Button';
 import Palette from '../../../theme/Palette';
@@ -19,7 +19,6 @@ const StyledSecondaryButton = styled(Button)`
 `;
 
 const IconContainer = styled.div`
-  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -29,37 +28,31 @@ const IconContainer = styled.div`
 const StyledPrimaryButton = styled(Button)`
   width: 194px;
   display: flex;
+  align-items: flex-start;
 `;
 
-const Items = styled.div`
-  position: absolute;
-  height: 100%;
-  top: 0;
-  left: 11px;
+const Item = styled.div`
+  width: 100%;
+  height: 56px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  
-  span {
-    transition: transform .3s, -webkit-transform .3s;
-  }
-  
-  .incoming{
-    transform: translateY(+250%);
-  }
-  
-  .visited{
-    transform: translateY(-200%);
-  }
-
-  .current{
-    transform: translateY(0);
-  }
+  justify-content: flex-start;
 `;
 
-const FooterRight = forwardRef((props, ref) => {
-  const { onPrevious, onConfirm, first } = props;
+const ContainerItems = styled.div`
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 1s;
+`;
 
+const FooterRight = (props) => {
+  const {
+    onPrevious, onConfirm, first,
+  } = props;
+
+  const ref = useRef();
   return (
     <Container>
       {first && (
@@ -68,16 +61,17 @@ const FooterRight = forwardRef((props, ref) => {
         </StyledSecondaryButton>
       )}
       <StyledPrimaryButton onClick={onConfirm}>
-        <Items ref={ref}>
-          <span>0</span>
-          <span>1</span>
-          <span>2</span>
-        </Items>
-        <AngleRightIcon />
+        <ContainerItems ref={ref}>
+          <Item>0</Item>
+          <Item>1</Item>
+          <Item>2</Item>
+          <Item>3</Item>
+        </ContainerItems>
+        <IconContainer><AngleRightIcon /></IconContainer>
       </StyledPrimaryButton>
     </Container>
   );
-});
+};
 
 FooterRight.propTypes = {
   /** Callback when click on back button */

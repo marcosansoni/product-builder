@@ -11,7 +11,7 @@ export default {
   //   },
   // },
   // args: {
-  //   price: 10000,
+  //   step: 0,
   // },
 };
 
