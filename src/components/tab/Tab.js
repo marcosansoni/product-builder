@@ -29,7 +29,13 @@ const Tab = (props) => {
     children, selected, disabled, onClick,
   } = props;
   return (
-    <Container selected={selected} disabled={disabled} onClick={onClick}>{children}</Container>
+    <Container
+      selected={selected}
+      disabled={disabled}
+      onClick={disabled ? () => undefined : onClick}
+    >
+      {children}
+    </Container>
   );
 };
 
@@ -41,7 +47,7 @@ Tab.propTypes = {
   /** Disabled tab */
   disabled: PropTypes.bool,
   /** Callback triggered at on click on tab item */
-  onClick: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 Tab.defaultProps = {

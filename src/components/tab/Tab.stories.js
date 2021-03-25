@@ -1,7 +1,7 @@
 import Tab from './Tab';
 
 export default {
-  title: 'components/tab',
+  title: 'components/tab/Tab',
   component: Tab,
   args: {
     children: 'Tab',
