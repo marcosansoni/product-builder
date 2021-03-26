@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import CheckIcon from '../../icon/CheckIcon';
 
@@ -82,19 +82,29 @@ const CheckButton = (props) => {
   const { selected, onChange, squared } = props;
   const ref = useRef();
 
-  const handleClick = () => {
-    if (!selected) {
+  useEffect(() => {
+    if (selected) {
       ref.current.classList.add('animate');
       ref.current.classList.remove('reverse');
     } else {
       ref.current.classList.add('reverse');
       ref.current.classList.remove('animate');
     }
-    onChange(!selected);
-  };
+  }, [selected]);
+
+  // const handleClick = () => {
+  //   if (!selected) {
+  //     ref.current.classList.add('animate');
+  //     ref.current.classList.remove('reverse');
+  //   } else {
+  //     ref.current.classList.add('reverse');
+  //     ref.current.classList.remove('animate');
+  //   }
+  //   onChange(!selected);
+  // };
 
   return (
-    <Container onClick={handleClick}>
+    <Container onClick={onChange}>
       <Background ref={ref} squared={squared} />
       <ContainerIcon>
         <CheckIcon />

@@ -9,11 +9,14 @@ const Container = styled.div`
   border-radius: 4px;
   cursor: pointer;
   border: ${(p) => `2px solid ${p.selected ? p.theme.PRIMARY : p.theme.GRAY_LIGHT_VARIANT}`};
+  height: fit-content;
+  height: -moz-fit-content;    /* Firefox/Gecko */
+  height: -webkit-fit-content;
 `;
 
 const Title = styled.div`
   display: block;
-  font-size: 3.2rem;
+  font-size: 32px;
   font-weight: 700;
   margin-top: .2em;
   width: 100%;
@@ -32,17 +35,19 @@ const Subtitle = styled.div`
   margin-bottom: 1em;
   width: 100%;
   text-align: center;
+  font-size: 16px;
 `;
 
 const Card = (props) => {
   const {
-    title, imageUrl, subtitle, selected, onClick,
+    title, imageUrl, subtitle, selected, onClick, children,
   } = props;
   return (
     <Container selected={selected} onClick={onClick}>
       <Title>{title}</Title>
       <Image src={imageUrl} />
       <Subtitle>{subtitle}</Subtitle>
+      {children}
     </Container>
   );
 };
@@ -58,6 +63,8 @@ Card.propTypes = {
   selected: PropTypes.bool,
   /** Callback at onClick of the card */
   onClick: PropTypes.func,
+  /** Any further elements */
+  children: PropTypes.any,
 };
 
 Card.defaultProps = {
@@ -66,6 +73,7 @@ Card.defaultProps = {
   subtitle: undefined,
   onClick: undefined,
   selected: false,
+  children: undefined,
 };
 
 export default Card;

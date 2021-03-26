@@ -10,18 +10,28 @@ const Container = styled.div`
 `;
 
 const Tabs = (props) => {
-  const { tabs, defaultSelected, disabled } = props;
+  const {
+    tabs, defaultSelected, disabled, onDisableClick, onSelect,
+  } = props;
   const [selected, setSelected] = useState(defaultSelected);
 
   useEffect(() => {
     if (selected !== defaultSelected) setSelected(defaultSelected);
   }, [defaultSelected]);
 
+  const handleClick = (index) => {
+    if (index !== selected && disabled) {
+      return onDisableClick?.();
+    }
+    onSelect(index);
+    return setSelected(index);
+  };
+
   return (
     <Container>
       {tabs.map((tab, index) => (
         <Tab
-          onClick={() => setSelected(index)}
+          onClick={() => handleClick(index)}
           selected={index === selected}
           disabled={index !== selected && disabled}
         >
@@ -39,12 +49,18 @@ Tabs.propTypes = {
   defaultSelected: PropTypes.number,
   /** Disabled */
   disabled: PropTypes.bool,
+  /** Callback used when we click on a tab disabled */
+  onDisableClick: PropTypes.func,
+  /** Callback used when we click on a tab */
+  onSelect: PropTypes.func,
 };
 
 Tabs.defaultProps = {
   tabs: [],
   defaultSelected: undefined,
   disabled: false,
+  onDisableClick: undefined,
+  onSelect: undefined,
 };
 
 export default Tabs;

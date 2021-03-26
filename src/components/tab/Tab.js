@@ -32,7 +32,7 @@ const Tab = (props) => {
     <Container
       selected={selected}
       disabled={disabled}
-      onClick={disabled ? () => undefined : onClick}
+      onClick={onClick}
     >
       {children}
     </Container>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef } from 'react';
+import { forwardRef } from 'react';
 import ButtonType from '../../button/constants/ButtonType';
 import Button from '../../button/Button';
 import Palette from '../../../theme/Palette';
@@ -47,12 +47,11 @@ const ContainerItems = styled.div`
   transition: transform 1s;
 `;
 
-const FooterRight = (props) => {
+const FooterRight = forwardRef((props, ref) => {
   const {
-    onPrevious, onConfirm, first,
+    onPrevious, onConfirm, first, primaryDisabled,
   } = props;
 
-  const ref = useRef();
   return (
     <Container>
       {first && (
@@ -60,18 +59,21 @@ const FooterRight = (props) => {
           <IconContainer><AngleLeftIcon color={Palette.GRAY} /></IconContainer>
         </StyledSecondaryButton>
       )}
-      <StyledPrimaryButton onClick={onConfirm}>
+      <StyledPrimaryButton
+        onClick={onConfirm}
+        disabled={primaryDisabled}
+      >
         <ContainerItems ref={ref}>
-          <Item>0</Item>
-          <Item>1</Item>
-          <Item>2</Item>
-          <Item>3</Item>
+          <Item>COLORS</Item>
+          <Item>ACCESSORIES</Item>
+          <Item>ITEMS</Item>
+          <Item>BUY NOW</Item>
         </ContainerItems>
         <IconContainer><AngleRightIcon /></IconContainer>
       </StyledPrimaryButton>
     </Container>
   );
-};
+});
 
 FooterRight.propTypes = {
   /** Callback when click on back button */
@@ -80,12 +82,15 @@ FooterRight.propTypes = {
   onConfirm: PropTypes.func,
   /** True when we land on first tab */
   first: PropTypes.bool,
+  /** If primary button is disabled */
+  primaryDisabled: PropTypes.bool,
 };
 
 FooterRight.defaultProps = {
   onPrevious: undefined,
   onConfirm: undefined,
   first: false,
+  primaryDisabled: false,
 };
 
 export default FooterRight;

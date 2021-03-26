@@ -4,7 +4,7 @@ import ButtonType from './constants/ButtonType';
 
 const backgroundColorHover = (type, disabled) => {
   if (disabled) {
-    return css`background-color: inherit`;
+    return css`background-color: ${(p) => p.theme.GRAY_TRANSPARENT}`;
   }
   if (type === ButtonType.SECONDARY) {
     return css`background-color: ${(p) => p.theme.GRAY_SUPER_LIGHT}`;
@@ -24,8 +24,8 @@ const backgroundColor = (type, disabled) => {
   return css`background-color: ${(p) => p.theme.PRIMARY}`;
 };
 
-const Container = styled.button`
-  //width: 194px;
+const Container = styled.div`
+  outline: 0;
   height: 56px;
   padding: 0 16px;
   border-radius: 2em;
@@ -82,7 +82,7 @@ const Button = (props) => {
       style={style}
       className={className}
       type={type}
-      onClick={disabled ? () => undefined : onClick}
+      onClick={onClick}
     >
       {/* {labels.map((label, index) => ( */}
       {/*  <Label */}
