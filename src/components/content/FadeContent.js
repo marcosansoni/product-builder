@@ -1,6 +1,5 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from 'react';
 
 const enter = keyframes`
   from {
@@ -23,6 +22,16 @@ const exit = keyframes`
     transform: translateX(0px);
   }
 `;
+
+const animation = (visible, landing) => {
+  if (!visible) {
+    return css`animation: ${exit} 1s ease-in forwards`;
+  }
+  if (landing) {
+    return css`animation: ${enter} 1s ease-in forwards`;
+  }
+  return css`animation: ${enter} 1s ease-in 1s forwards`;
+};
 
 const Container = styled.div`
   position: absolute;
@@ -59,6 +68,7 @@ const Content = styled.div`
   height: -moz-fit-content; /* Firefox/Gecko */
   height: -webkit-fit-content;
   transition: opacity 0.3s ease-in;
+  ${(p) => animation(p.visible, p.landing)};
 `;
 
 const FadeContent = (props) => {
@@ -68,32 +78,9 @@ const FadeContent = (props) => {
     landing,
   } = props;
 
-  const ref = useRef();
-
-  useEffect(() => {
-    if (ref.current) {
-      if (!visible) {
-        // return css`animation: ${exit} 1s ease-in forwards`;
-        ref.current.classList.add('not-visible');
-        ref.current.classList.remove('visible');
-        ref.current.classList.remove('visible-first');
-        return;
-      }
-      if (landing) {
-        ref.current.classList.add('visible-first');
-        ref.current.classList.remove('visible');
-        ref.current.classList.remove('not-visible');
-        return;
-      }
-      ref.current.classList.add('visible');
-      ref.current.classList.remove('visible-first');
-      ref.current.classList.remove('not-visible');
-    }
-  }, [visible]);
-
   return (
     <Container visible={visible}>
-      <Content ref={ref}>
+      <Content visible={visible} landing={landing}>
         {children}
       </Content>
     </Container>
