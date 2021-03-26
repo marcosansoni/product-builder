@@ -60,6 +60,10 @@ const ColorSelection = styled.div`
   justify-content: center;
 `;
 
+const StyledFadeContent = styled(FadeContent)`
+  flex-direction: column;
+`;
+
 const ColorsView = (props) => {
   const { visible } = props;
   const formik = useFormikContext();
@@ -71,7 +75,7 @@ const ColorsView = (props) => {
   }, [formik.values.color, formik.values.models]);
 
   return (
-    <FadeContent visible={visible}>
+    <StyledFadeContent visible={visible}>
       <Car src={imageUrl} />
       <ColorSelection>
         {formik.values.models === ModelType.I3 && (
@@ -113,7 +117,7 @@ const ColorsView = (props) => {
           </>
         )}
       </ColorSelection>
-    </FadeContent>
+    </StyledFadeContent>
   );
 };
 

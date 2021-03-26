@@ -76,11 +76,13 @@ const FadeContent = (props) => {
     children,
     visible,
     landing,
+    style,
+    className,
   } = props;
 
   return (
     <Container visible={visible}>
-      <Content visible={visible} landing={landing}>
+      <Content visible={visible} landing={landing} style={style} className={className}>
         {children}
       </Content>
     </Container>
@@ -94,10 +96,16 @@ FadeContent.propTypes = {
   visible: PropTypes.bool,
   /** If true the enter animation will not be delayed */
   landing: PropTypes.bool,
+  /** Style used for being styled from parent */
+  style: PropTypes.object,
+  /** Classname */
+  className: PropTypes.string,
 };
 
 FadeContent.defaultProps = {
   children: undefined,
+  style: undefined,
+  className: undefined,
   landing: false,
   visible: false,
 };
