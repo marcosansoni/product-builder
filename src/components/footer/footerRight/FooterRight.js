@@ -15,7 +15,9 @@ const Container = styled.div`
 
 const StyledSecondaryButton = styled(Button)`
   width: 56px;
-  margin-right: 11px
+  margin-right: 11px;
+  opacity: ${(p) => (p.secondaryEnabled ? '1' : '0')};
+  transition: opacity 0.3s ease-in;
 `;
 
 const IconContainer = styled.div`
@@ -37,6 +39,7 @@ const Item = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  transition: visibility 0.5s;
 `;
 
 const ContainerItems = styled.div`
@@ -49,16 +52,18 @@ const ContainerItems = styled.div`
 
 const FooterRight = forwardRef((props, ref) => {
   const {
-    onPrevious, onConfirm, first, primaryDisabled,
+    onConfirm, secondaryEnabled, primaryDisabled, onSecondary,
   } = props;
 
   return (
     <Container>
-      {first && (
-        <StyledSecondaryButton type={ButtonType.SECONDARY} onClick={onPrevious}>
-          <IconContainer><AngleLeftIcon color={Palette.GRAY} /></IconContainer>
-        </StyledSecondaryButton>
-      )}
+      <StyledSecondaryButton
+        type={ButtonType.SECONDARY}
+        onClick={onSecondary}
+        secondaryEnabled={secondaryEnabled}
+      >
+        <IconContainer style={{ width: '100%' }}><AngleLeftIcon color={Palette.GRAY} /></IconContainer>
+      </StyledSecondaryButton>
       <StyledPrimaryButton
         onClick={onConfirm}
         disabled={primaryDisabled}
@@ -66,7 +71,7 @@ const FooterRight = forwardRef((props, ref) => {
         <ContainerItems ref={ref}>
           <Item>COLORS</Item>
           <Item>ACCESSORIES</Item>
-          <Item>ITEMS</Item>
+          <Item>SUMMARY</Item>
           <Item>BUY NOW</Item>
         </ContainerItems>
         <IconContainer><AngleRightIcon /></IconContainer>
@@ -76,20 +81,20 @@ const FooterRight = forwardRef((props, ref) => {
 });
 
 FooterRight.propTypes = {
-  /** Callback when click on back button */
-  onPrevious: PropTypes.func,
   /** Callback when click on primary button */
   onConfirm: PropTypes.func,
-  /** True when we land on first tab */
-  first: PropTypes.bool,
+  /** Callback when click on secondary button */
+  onSecondary: PropTypes.func,
+  /** Secondary button is showed if true */
+  secondaryEnabled: PropTypes.bool,
   /** If primary button is disabled */
   primaryDisabled: PropTypes.bool,
 };
 
 FooterRight.defaultProps = {
-  onPrevious: undefined,
+  onSecondary: undefined,
   onConfirm: undefined,
-  first: false,
+  secondaryEnabled: false,
   primaryDisabled: false,
 };
 

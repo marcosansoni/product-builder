@@ -7,8 +7,8 @@ import { Snackbar } from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
 import Tabs from '../components/tab/Tabs';
 import Footer from '../components/footer/Footer';
-import Models from './Models';
-import Colors from './Colors';
+import ModelsView from './ModelsView';
+import ColorsView from './ColorsView';
 import MediaQuerySelector from '../theme/MediaQuerySelector';
 
 const Container = styled.div`
@@ -38,8 +38,9 @@ const Content = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  overflow: auto;
-  padding: 70px 5%;
+  overflow: hidden;
+  padding: 70px 5% 40px;
+  position: relative;
 `;
 
 const initialValues = {
@@ -79,16 +80,16 @@ const Form = () => {
     return setSelectedPageIndex(selectedPageIndex + 1);
   };
 
-  const renderPage = () => {
-    switch (selectedPageIndex) {
-      case 0:
-        return (<Models onSelect={() => setOpenSnackbar(false)} />);
-      case 1:
-        return (<Colors />);
-      default:
-        return null;
-    }
-  };
+  // const renderPage = () => {
+  //   switch (selectedPageIndex) {
+  //     case 0:
+  //       return (<ModelsView onSelect={() => setOpenSnackbar(false)} />);
+  //     case 1:
+  //       return (<ColorsView />);
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   return (
     <>
@@ -118,11 +119,20 @@ const Form = () => {
                 }}
                 onSelect={(index) => setSelectedPageIndex(index)}
               />
-              <Content>{renderPage()}</Content>
+              <Content>
+                <ModelsView
+                  onSelect={() => setOpenSnackbar(false)}
+                  visible={selectedPageIndex === 0}
+                />
+                <ColorsView
+                  visible={selectedPageIndex === 1}
+                />
+              </Content>
               <Footer
                 step={selectedPageIndex}
                 onConfirm={() => handlePrimaryClick(formik.values.models)}
                 primaryDisabled={formik.values.models === undefined}
+                onSecondary={() => setSelectedPageIndex(selectedPageIndex - 1)}
               />
             </Container>
           </>

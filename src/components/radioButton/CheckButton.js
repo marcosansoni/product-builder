@@ -92,17 +92,6 @@ const CheckButton = (props) => {
     }
   }, [selected]);
 
-  // const handleClick = () => {
-  //   if (!selected) {
-  //     ref.current.classList.add('animate');
-  //     ref.current.classList.remove('reverse');
-  //   } else {
-  //     ref.current.classList.add('reverse');
-  //     ref.current.classList.remove('animate');
-  //   }
-  //   onChange(!selected);
-  // };
-
   return (
     <Container onClick={onChange}>
       <Background ref={ref} squared={squared} />

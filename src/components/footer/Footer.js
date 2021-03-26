@@ -24,13 +24,20 @@ const Container = styled.div`
 `;
 
 const Footer = (props) => {
-  const { step, onConfirm, primaryDisabled } = props;
+  const {
+    step, onConfirm, primaryDisabled, onSecondary,
+  } = props;
   const buttonRef = useRef();
   const formik = useFormikContext();
 
   useEffect(() => {
     if (buttonRef.current) {
       buttonRef.current.style.transform = `translateY(-${56 * step}px)`;
+      Array.from(buttonRef.current?.childNodes).forEach((item, index) => {
+        // eslint-disable-next-line no-param-reassign
+        item.style.visibility = index === step ? 'visible' : 'hidden';
+        // item.style.animation = index === step ? 'visible' : 'hidden';
+      });
     }
   }, [step, buttonRef]);
 
@@ -60,7 +67,13 @@ const Footer = (props) => {
   return (
     <Container>
       <FooterLeft imageUrl={imageUrl} price={price} />
-      <FooterRight ref={buttonRef} onConfirm={onConfirm} primaryDisabled={primaryDisabled} />
+      <FooterRight
+        ref={buttonRef}
+        onConfirm={onConfirm}
+        primaryDisabled={primaryDisabled}
+        secondaryEnabled={step !== 0}
+        onSecondary={onSecondary}
+      />
     </Container>
   );
 };
@@ -70,6 +83,8 @@ Footer.propTypes = {
   step: PropTypes.number,
   /** Callback used when primary button is clicked */
   onConfirm: PropTypes.func,
+  /** Callback used when secondary button is clicked */
+  onSecondary: PropTypes.func,
   /** If primary button is disabled */
   primaryDisabled: PropTypes.bool,
 };
@@ -77,6 +92,7 @@ Footer.propTypes = {
 Footer.defaultProps = {
   step: 0,
   onConfirm: undefined,
+  onSecondary: undefined,
   primaryDisabled: false,
 };
 
