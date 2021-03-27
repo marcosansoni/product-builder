@@ -9,51 +9,16 @@ import Palette from '../theme/Palette';
 import FadeContent from '../components/content/FadeContent';
 import Price from '../constants/Price';
 import thousandsNotation from '../utils/thousandsNotation';
-
-// const enter = keyframes`
-//   from{
-//     opacity: 0;
-//     //display: none;
-//     transform: translateX(10px);
-//   }
-//   to{
-//     opacity: 1;
-//     display: flex;
-//     transform: translateX(0px);
-//   }
-// `;
-//
-// const exit = keyframes`
-//   to{
-//     opacity: 0;
-//     transform: translateX(-10px);
-//   }
-//   from{
-//     opacity: 1;
-//     transform: translateX(0px);
-//   }
-// `;
-
-// const CardContainer = styled.div`
-//   //display: none;
-//   position: absolute;
-//   opacity: 0;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   max-width: 1000px;
-//   padding-bottom: 2.7em;
-//   height: fit-content;
-//   height: -moz-fit-content;    /* Firefox/Gecko */
-//   height: -webkit-fit-content;
-//   transition: opacity 0.3s ease-in;
-//   animation: ${(p) => (p.visible ? css`${enter} 1s eas
-//  e-in 1s forwards` : css`${exit} 1s ease-in forwards`)};
-// `;
+import MediaQuerySelector from '../theme/MediaQuerySelector';
 
 const Car = styled.img`
   width: 100%;
   margin-bottom: 2em;
   max-width: 750px;
+  
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    margin: 2.5em 0 4.5em;
+  }
 `;
 
 const ColorSelection = styled.div`

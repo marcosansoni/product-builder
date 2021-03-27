@@ -11,11 +11,16 @@ import { ColorByModels, ColorLabelsByModels } from '../constants/Color';
 import Price from '../constants/Price';
 import thousandsNotation from '../utils/thousandsNotation';
 import { AccessoriesLabel } from '../constants/Accessories';
+import MediaQuerySelector from '../theme/MediaQuerySelector';
 
 const StyledFadeContent = styled(FadeContent)`
   flex-direction: column;
   width: 100%;
   align-items: center;
+  
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    align-items: flex-start;
+  }
 `;
 
 const Paragraph = styled.div`
@@ -24,6 +29,11 @@ const Paragraph = styled.div`
   line-height: 30px;
   color: ${(p) => p.theme.GRAY};
   margin-bottom: 45px;
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    text-align: left;
+    font-size: 16px;
+  }
 `;
 
 const Separator = styled.div`
@@ -38,11 +48,16 @@ const Subtitle = styled.div`
   font-weight: 700;
   color: ${(p) => p.theme.BLACK};
   margin-bottom: 20px;
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    font-size: 16px;
+  }
 `;
 
 const Image = styled.img`
   margin: 0 auto 20px;
   max-width: 700px;
+  width: 100%;
 `;
 
 const Title = styled.div`
@@ -50,27 +65,57 @@ const Title = styled.div`
   font-size: 40px;
   font-weight: 700;
   color: ${(p) => p.theme.BLACK};
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    font-size: 24px;
+  }
 `;
 
 const ColorContainer = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 72px;
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    padding-bottom: 32px;
+  }
 `;
 
 const ColorDescription = styled.div`
   font-size: 24px;
   margin-left: 4px;
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    font-size: 18px;
+  }
 `;
 
-const AccessoryList = styled.ul``;
+const AccessoryList = styled.ul`
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    padding-left: 16px;
+  }
+`;
 
 const Item = styled.li`
   font-size: 18px;
   line-height: 28px;
   color: ${(p) => p.theme.GRAY};
   
-  ::marker{}
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    font-size: 16px;
+  }
+  
+  ::marker{};
+`;
+
+const StyledColorPicker = styled(ColorPicker)`
+  cursor: auto;
+  margin: 0 8px 0 0;
+  
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    width: 36px;
+    height: 36px;
+  }
 `;
 
 const SummaryView = (props) => {
@@ -83,8 +128,6 @@ const SummaryView = (props) => {
     if (models === ModelType.I3) return I3Url[color];
     return I8Url[color];
   }, [color, models]);
-
-  console.log(accessories, models, color);
 
   return (
     <StyledFadeContent visible={visible}>
@@ -103,7 +146,7 @@ const SummaryView = (props) => {
       <Separator />
       <Subtitle>COLOR</Subtitle>
       <ColorContainer>
-        <ColorPicker color={ColorByModels?.[models]?.[color]} style={{ cursor: 'auto' }} />
+        <StyledColorPicker color={ColorByModels?.[models]?.[color]} />
         <ColorDescription>
           {`${ColorLabelsByModels?.[models]?.[color]} - $${thousandsNotation(Price?.[models]?.COLOR?.[color])}`}
         </ColorDescription>

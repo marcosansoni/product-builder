@@ -60,8 +60,11 @@ const MobileTitleContainer = styled.div`
   align-items: baseline;
   
   ${MediaQuerySelector.LARGE}{
-    padding: 1.8em 5% 1em;
     display: none;
+  }
+  
+  ${MediaQuerySelector.SMALL}{
+    padding: 1.8em 5% 1em;
   }
 `;
 
@@ -132,7 +135,12 @@ const Form = () => {
                 onSelect={(index) => setSelectedPageIndex(index)}
               />
               <MobileTitleContainer>
-                <MobileTitle>Select Model</MobileTitle>
+                <MobileTitle>
+                  {selectedPageIndex === 0 && 'Select Model'}
+                  {selectedPageIndex === 1 && 'Select Color'}
+                  {selectedPageIndex === 2 && 'Accessories'}
+                  {selectedPageIndex === 3 && 'Summary'}
+                </MobileTitle>
                 <StepIndicator>{`Step ${selectedPageIndex + 1} of 4`}</StepIndicator>
               </MobileTitleContainer>
               <Content>

@@ -5,6 +5,7 @@ import FadeContent from '../components/content/FadeContent';
 import Card from '../components/card/Card';
 import CheckButton from '../components/radioButton/CheckButton';
 import { AccessoriesLabel, AccessoriesPricesByModel } from '../constants/Accessories';
+import MediaQuerySelector from '../theme/MediaQuerySelector';
 
 const StyledFadeContent = styled(FadeContent)`
   flex-direction: column;
@@ -22,16 +23,45 @@ const StyledCard = styled(Card)`
   font-weight: 700;
   color: ${(p) => p.theme.BLACK};
   margin-bottom: 24px;
+  
+  ${MediaQuerySelector.MEDIUM}{
+    padding: 32px 24px;
+    font-size: 22px;
+  }
+  
+  ${MediaQuerySelector.SMALL}{
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const Right = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
+  ${MediaQuerySelector.SMALL}{
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const Price = styled.div`
   padding-right: 40px;
+  
+  ${MediaQuerySelector.SMALL}{
+    font-size: 16px;
+    margin: 1.2em auto;
+    color: ${(p) => p.theme.GRAY};
+    padding: 0;
+  }
+`;
+
+const Label = styled.div`
+  ${MediaQuerySelector.SMALL}{
+    font-size: 18px;
+    text-align: center;
+  }
 `;
 
 const AccessoriesView = (props) => {
@@ -51,7 +81,7 @@ const AccessoriesView = (props) => {
       selected={accessories.includes(accessory)}
       onClick={() => handleClickCard(accessory)}
     >
-      <div>{AccessoriesLabel[accessory]}</div>
+      <Label>{AccessoriesLabel[accessory]}</Label>
       <Right>
         <Price>{`$${AccessoriesPricesByModel[formik.values.models][accessory]}`}</Price>
         <CheckButton selected={accessories.includes(accessory)} squared />

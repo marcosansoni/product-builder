@@ -4,18 +4,12 @@ import { useEffect, useRef } from 'react';
 import MediaQuerySelector from '../../theme/MediaQuerySelector';
 
 const Color = styled.div`
-  margin: 0 8px;
-  height: 50px;
-  width: 50px;
   border-radius: 50%;
   background-color: ${(p) => p.backgroundColor};
   border: ${(p) => `2px solid ${p.theme.WHITE}`};
   box-shadow: ${(p) => `0 0 0 2px ${p.selected ? p.theme.PRIMARY : p.theme.GRAY_LIGHT_VARIANT}`};
-
-  ${MediaQuerySelector.SMALL} {
-    width: 30px;
-    height: 30px;
-  }
+  width: 100%;
+  height: 100%;
 `;
 
 const visible = keyframes`
@@ -47,6 +41,14 @@ const hidden = keyframes`
 const Container = styled.div`
   position: relative;
   cursor: pointer;
+  height: 50px;
+  width: 50px;
+  margin: 0 8px;
+
+  ${MediaQuerySelector.SMALL} {
+    width: 30px;
+    height: 30px;
+  }
 
   .visible {
     animation: ${visible} 0.2s ease-in forwards;
