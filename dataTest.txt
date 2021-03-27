@@ -1,0 +1,60 @@
+Should be displayed snackbar if no model is selected when we click on tabs
+
+Should be displayed snackbar if no model is selected when we click on primary button on footer
+
+Should be disabled other tabs if no model is selected
+
+Should de displayed 0$ if no model is selected
+
+--
+
+
+
+Should be enabled tabs when i3 model is selected
+Should be enabled primary button when i3 model is selected
+SHould be disabled primary button when we click on i3 card if i3 model is selected
+
+Should be update price on footer with i3 default price when we click on i3 card
+
+Should be update images on footer with i3 default image when we click on i3 card
+
+Should be enabled tabs when i3 model is selected
+Should be enabled primary button when i3 model is selected
+SHould be disabled primary button when we click on i3 card if i3 model is selected
+
+Should be selected by default white color for i3 models
+
+----
+Footer
+
+Should be displayed snackbar if no model is selected when we click on primary button on footer
+Should de displayed 0$ if no model is selected
+Should be displayed no car image if no model is selected
+Should be displayed no secondary button of model page
+
+Should be update price on footer with i3 default price when we click on i3 card
+Should be update images on footer with i3 default image when we click on i3 card
+
+Should be update price on footer with i8 default price when we click on i8 card on models page
+Should be update images on footer with i8 default image when we click on i8 card on models page
+
+Should be navigate between color page on click on primary button if a model is selected
+Should be navigate on model page on click on secondary button when we are on color page
+
+Should be update price when we select orange color for i3 model
+Should be update image when we select orange color for i3 model
+
+Should be update price when we select white color for i3 model
+Should be update image when we select white color for i3 model
+
+Should be update price when we select grey color for i3 model
+Should be update image when we select grey color for i3 model
+
+Should be update price when we select grey color for i8 model
+Should be update image when we select grey color for i8 model
+
+Should be update price when we select white color for i8 model
+Should be update image when we select white color for i8 model
+
+Should be navigate between accessories page on click on primary button when we are on color page
+Should be navigate on color page on click on secondary button when we are on accessory page
