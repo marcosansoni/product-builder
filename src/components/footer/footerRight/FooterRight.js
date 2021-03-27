@@ -88,6 +88,12 @@ const ContainerItems = styled.div`
   transition: transform 1s;
 `;
 
+const ContainerSecondaryItems = styled(ContainerItems)`
+  ${MediaQuerySelector.LARGE}{
+    display: none;
+  }
+`;
+
 const FooterRight = (props) => {
   const {
     onConfirm, secondaryEnabled, primaryDisabled, onSecondary, step,
@@ -120,12 +126,12 @@ const FooterRight = (props) => {
         secondaryEnabled={secondaryEnabled}
       >
         <IconContainer secondary><AngleLeftIcon color={Palette.GRAY} /></IconContainer>
-        <ContainerItems ref={secondaryRef}>
+        <ContainerSecondaryItems ref={secondaryRef}>
           <Item />
           <Item>MODELS</Item>
           <Item>COLORS</Item>
           <Item>ACCESSORIES</Item>
-        </ContainerItems>
+        </ContainerSecondaryItems>
       </StyledSecondaryButton>
       <StyledPrimaryButton
         secondaryEnabled={secondaryEnabled}

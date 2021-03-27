@@ -32,7 +32,7 @@ const Container = styled.div`
   font-size: 14px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   color: ${(p) => (p.type === ButtonType.PRIMARY ? p.theme.WHITE : p.theme.GRAY)};
   text-transform: uppercase;
   font-weight: 700;
@@ -46,55 +46,20 @@ const Container = styled.div`
   }
 `;
 
-// const Label = styled.span`
-//   position: absolute;
-//   padding-left: 2.3em;
-//   top: 0;
-//   left: 0;
-//   height: 100%;
-//   display: flex;
-//   align-items: center;
-//   transform: translateY(+200%);
-//   // transform: ${(p) => (p.current && 'translateY(0)')};
-//   // transform: ${(p) => (p.previous && 'translateY(-200%)')};
-//   // transform: ${(p) => (p.following && 'translateY(+200%)')};
-//   transition: transform .3s, -webkit-transform .3s;
-//
-//   //:hover{
-//   //  transform: translateY(-200%);
-//   //}
-// `;
-
 const Button = (props) => {
   const {
-    disabled, style, className, children, type, onClick,
+    disabled, style, className, children, type, onClick, dataTest,
   } = props;
-
-  // const classNameGenerator = (index) => {
-  //   if (index === step) return 'current';
-  //   if (index > step) return 'visited';
-  //   return '';
-  // };
 
   return (
     <Container
+      data-test={`${dataTest}-button`}
       disabled={disabled}
       style={style}
       className={className}
       type={type}
       onClick={onClick}
     >
-      {/* {labels.map((label, index) => ( */}
-      {/*  <Label */}
-      {/*    key={label} */}
-      {/*    // current={index === step} */}
-      {/*    // previous={index < step} */}
-      {/*    // following={index > step} */}
-      {/*    className={classNameGenerator(index)} */}
-      {/*  > */}
-      {/*    {label} */}
-      {/*  </Label> */}
-      {/* ))} */}
       {children}
     </Container>
   );
@@ -113,6 +78,8 @@ Button.propTypes = {
   type: PropTypes.oneOf(['SECONDARY', 'PRIMARY']),
   /** Callback when onClick */
   onClick: PropTypes.func,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -121,6 +88,7 @@ Button.defaultProps = {
   className: undefined,
   children: undefined,
   onClick: undefined,
+  dataTest: undefined,
   type: ButtonType.PRIMARY,
 };
 

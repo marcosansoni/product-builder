@@ -15,9 +15,6 @@ export default {
   argTypes: {
     color: { control: 'color' },
   },
-  // args: {
-  //   children: 'Tab',
-  // },
 };
 
 const Template = (args) => (

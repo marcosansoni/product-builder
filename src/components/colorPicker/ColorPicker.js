@@ -91,7 +91,7 @@ const Tooltip = styled.div`
 
 const ColorPicker = (props) => {
   const {
-    style, className, selected, color, tooltip, onClick,
+    style, className, selected, color, tooltip, onClick, dataTest,
   } = props;
   const ref = useRef();
   const arrowRef = useRef();
@@ -129,9 +129,9 @@ const ColorPicker = (props) => {
 
   return (
     <Container ref={ref} onClick={onClick} style={style} className={className}>
-      {tooltip && (<Tooltip ref={tooltipRef}>{tooltip}</Tooltip>)}
+      {tooltip && (<Tooltip ref={tooltipRef} data-test={`${dataTest}-tooltip`}>{tooltip}</Tooltip>)}
       {tooltip && (<Arrow ref={arrowRef} />)}
-      <Color selected={selected} backgroundColor={color} />
+      <Color selected={selected} backgroundColor={color} data-test={`${dataTest}-color`} />
     </Container>
   );
 };
@@ -149,6 +149,8 @@ ColorPicker.propTypes = {
   tooltip: PropTypes.string,
   /** Callback triggered at click */
   onClick: PropTypes.func,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 ColorPicker.defaultProps = {
@@ -158,6 +160,7 @@ ColorPicker.defaultProps = {
   color: undefined,
   onClick: undefined,
   selected: false,
+  dataTest: undefined,
 };
 
 export default ColorPicker;

@@ -40,13 +40,14 @@ const Subtitle = styled.div`
 
 const Card = (props) => {
   const {
-    title, imageUrl, subtitle, selected, onClick, children, style, className,
+    title, imageUrl, subtitle, selected, onClick, children, style, className, dataTest,
   } = props;
+
   return (
     <Container selected={selected} onClick={onClick} style={style} className={className}>
-      {title && (<Title>{title}</Title>)}
-      {imageUrl && (<Image src={imageUrl} />)}
-      {subtitle && (<Subtitle>{subtitle}</Subtitle>)}
+      {title && (<Title data-test={`${dataTest}-title`}>{title}</Title>)}
+      {imageUrl && (<Image src={imageUrl} data-test={`${dataTest}-image`} />)}
+      {subtitle && (<Subtitle data-test={`${dataTest}-subtitle`}>{subtitle}</Subtitle>)}
       {children}
     </Container>
   );
@@ -69,6 +70,8 @@ Card.propTypes = {
   style: PropTypes.object,
   /** Classname */
   className: PropTypes.string,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 Card.defaultProps = {
@@ -80,6 +83,7 @@ Card.defaultProps = {
   children: undefined,
   style: undefined,
   className: undefined,
+  dataTest: undefined,
 };
 
 export default Card;

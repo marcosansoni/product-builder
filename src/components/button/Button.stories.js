@@ -5,8 +5,7 @@ export default {
   title: 'components/button',
   component: Button,
   args: {
-    labels: ['Ciao', 'a', 'tutti'],
-    children: 'Ciao',
+    children: 'Label',
     type: ButtonType.PRIMARY,
   },
 };

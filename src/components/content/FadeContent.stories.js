@@ -3,11 +3,15 @@ import FadeContent from './FadeContent';
 export default {
   title: 'components/content/FadeContent',
   component: FadeContent,
+  args: {
+    visible: true,
+    landing: true,
+  },
 };
 
-const Template = () => (
-  <FadeContent>
-    A
+const Template = (args) => (
+  <FadeContent {...args}>
+    Content
   </FadeContent>
 );
 

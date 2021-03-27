@@ -91,10 +91,11 @@ const FadeContent = (props) => {
     landing,
     style,
     className,
+    dataTest,
   } = props;
 
   return (
-    <Container visible={visible}>
+    <Container visible={visible} data-test={`${dataTest}-content`}>
       <PerfectScrollbar options={{ suppressScrollX: true }} style={{ width: '100vw' }}>
         <Flex>
           <Content visible={visible} landing={landing} style={style} className={className}>
@@ -117,12 +118,15 @@ FadeContent.propTypes = {
   style: PropTypes.object,
   /** Classname */
   className: PropTypes.string,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 FadeContent.defaultProps = {
   children: undefined,
   style: undefined,
   className: undefined,
+  dataTest: undefined,
   landing: false,
   visible: false,
 };
