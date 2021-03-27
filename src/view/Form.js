@@ -47,15 +47,20 @@ const Content = styled.div`
   overflow: hidden;
   padding: 70px 5% 40px;
   position: relative;
+  
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    padding-top: 0;
+  }
 `;
 
 const MobileTitleContainer = styled.div`
-  padding: 1.8em 0 3em;
+  padding: 1.8em 5% 2em;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   
   ${MediaQuerySelector.LARGE}{
+    padding: 1.8em 5% 1em;
     display: none;
   }
 `;
@@ -63,11 +68,19 @@ const MobileTitleContainer = styled.div`
 const MobileTitle = styled.div`
   font-size: 40px;
   color: ${(p) => p.theme.BLACK};
+  
+  ${MediaQuerySelector.SMALL}{
+    font-size: 24px;
+  }
 `;
 
 const StepIndicator = styled.div`
   font-size: 20px;
   color: ${(p) => p.theme.GRAY};
+
+  ${MediaQuerySelector.SMALL}{
+    font-size: 16px;
+  }
 `;
 
 const initialValues = {

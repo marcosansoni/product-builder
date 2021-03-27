@@ -2,11 +2,16 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import Tab from './Tab';
+import MediaQuerySelector from '../../theme/MediaQuerySelector';
 
 const Container = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
+  
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    display: none;
+  }
 `;
 
 const Tabs = (props) => {

@@ -1,6 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import MediaQuerySelector from '../../theme/MediaQuerySelector';
 
 const enter = keyframes`
   from {
@@ -77,6 +78,10 @@ const Content = styled.div`
   height: -webkit-fit-content;
   transition: opacity 0.3s ease-in;
   ${(p) => animation(p.visible, p.landing)};
+  
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    padding-top: 0;
+  }
 `;
 
 const FadeContent = (props) => {

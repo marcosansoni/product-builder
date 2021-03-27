@@ -1,19 +1,50 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { useFormikContext } from 'formik';
 import FooterLeft from './footerLeft/FooterLeft';
 import FooterRight from './footerRight/FooterRight';
 import { I3Url, I8Url, ModelType } from '../../constants/Models';
 import Price from '../../constants/Price';
 import { AccessoriesPricesByModel } from '../../constants/Accessories';
+import MediaQuerySelector from '../../theme/MediaQuerySelector';
+
+const enter = keyframes`
+  from {
+    opacity: 0;
+    height: 56px;
+    transform: translateY(56px);
+  }
+  to {
+    opacity: 1;
+    height: 56px;
+    transform: translateY(0);
+  }
+`;
+
+const leave = keyframes`
+  100% {
+    opacity: 0;
+    height: 0;
+    transform: translateY(56px);
+  }
+  //99%{
+  //  opacity: 0;
+  //  height: 56px;
+  //  transform: translateY(56px);
+  //}
+  0% {
+    opacity: 1;
+    height: 56px;
+    transform: translateY(0);
+  }
+`;
 
 const Container = styled.div`
   height: 100px;
   width: 100vw;
   padding: 0 2em;
   box-shadow: 0 0 39px rgb(0 0 0 / 10%);
-  //position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -22,24 +53,21 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: ${(p) => p.theme.WHITE};
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
+    opacity: 0;
+    transform: translateY(56px);
+    height: 0;
+    animation: ${(p) => (p.visible ? css`${enter} 0.2s ease-in forwards` : css`${leave} 0.2s ease-in forwards`)};
+    padding: 0;
+  }
 `;
 
 const Footer = (props) => {
   const {
     step, onConfirm, primaryDisabled, onSecondary,
   } = props;
-  const buttonRef = useRef();
   const formik = useFormikContext();
-
-  useEffect(() => {
-    if (buttonRef.current) {
-      buttonRef.current.style.transform = `translateY(-${56 * step}px)`;
-      Array.from(buttonRef.current?.childNodes).forEach((item, index) => {
-        // eslint-disable-next-line no-param-reassign
-        item.style.visibility = index === step ? 'visible' : 'hidden';
-      });
-    }
-  }, [step, buttonRef]);
 
   const imageUrl = useMemo(() => {
     if (!formik.values.models) return undefined;
@@ -59,11 +87,13 @@ const Footer = (props) => {
     return result;
   }, [formik.values.color, formik.values.models, formik.values.accessories]);
 
+  console.log(!!formik.values.models);
+
   return (
-    <Container>
+    <Container visible={!!formik.values.models}>
       <FooterLeft imageUrl={imageUrl} price={price} />
       <FooterRight
-        ref={buttonRef}
+        step={step}
         onConfirm={onConfirm}
         primaryDisabled={primaryDisabled}
         secondaryEnabled={step !== 0}

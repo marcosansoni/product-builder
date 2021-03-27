@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
+import MediaQuerySelector from '../../../theme/MediaQuerySelector';
 
 const Container = styled.div`
   height: 100%;
@@ -32,6 +33,10 @@ const Container = styled.div`
 
   .reverse {
     animation: move-in-reverse .5s forwards;
+  }
+  
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    display: none;
   }
 `;
 

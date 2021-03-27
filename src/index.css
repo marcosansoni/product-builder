@@ -3,10 +3,12 @@
 html {
   font-family: Lato, serif;
   box-sizing: border-box;
+  font-size: 62.5%;
 }
 body {
   font-family: Lato, serif;
-  font-size: 62.5%;
+  font-size: 1.6rem;
+  font-weight: 400;
   margin: 0;
   padding: 0;
 }

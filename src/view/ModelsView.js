@@ -6,67 +6,25 @@ import CheckButton from '../components/radioButton/CheckButton';
 import { I3Url, I8Url, ModelType } from '../constants/Models';
 import Color from '../constants/Color';
 import FadeContent from '../components/content/FadeContent';
-
-// const enter = keyframes`
-//   from{
-//     opacity: 0;
-//     transform: translateX(10px);
-//   }
-//   to{
-//     opacity: 1;
-//     transform: translateX(0px);
-//   }
-// `;
-//
-// const exit = keyframes`
-//   to{
-//     opacity: 0;
-//     transform: translateX(-10px);
-//   }
-//   from{
-//     opacity: 1;
-//     transform: translateX(0px);
-//   }
-// `;
-//
-// const animation = (visible, firstTime) => {
-//   if (!visible) {
-//     return css`animation: ${exit} 1s ease-in forwards`;
-//   }
-//   if (firstTime) {
-//     return css`animation: ${enter} 1s ease-in forwards`;
-//   }
-//   return css`animation: ${enter} 1s ease-in 1s forwards`;
-// };
-//
-// const Container = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   display: flex;
-//   justify-content: center;
-//   overflow: auto;
-// `;
-//
-// const CardContainer = styled.div`
-//   display: flex;
-//   opacity: 0;
-//   justify-content: space-between;
-//   max-width: 1000px;
-//   padding: 70px 0 40px;
-//   height: fit-content;
-//   height: -moz-fit-content;    /* Firefox/Gecko */
-//   height: -webkit-fit-content;
-//   transition: opacity 0.3s ease-in;
-//   ${(p) => animation(p.visible, p.firstTime)};
-// `;
+import MediaQuerySelector from '../theme/MediaQuerySelector';
 
 const RadioContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+`;
+
+const StyledFadeContent = styled(FadeContent)`
+  ${MediaQuerySelector.SMALL}{
+    flex-direction: column;
+  }
+`;
+
+const StyledCard = styled(Card)`
+  ${MediaQuerySelector.SMALL}{
+    width: 100%;
+    margin-bottom: 20px;
+  }
 `;
 
 const ModelsView = (props) => {
@@ -85,8 +43,8 @@ const ModelsView = (props) => {
   };
 
   return (
-    <FadeContent visible={visible} landing={formik.values.color === undefined}>
-      <Card
+    <StyledFadeContent visible={visible} landing={formik.values.color === undefined}>
+      <StyledCard
         imageUrl={I3Url.WHITE}
         title="BMW i3"
         subtitle="from $42.400"
@@ -99,8 +57,8 @@ const ModelsView = (props) => {
             onChange={() => undefined}
           />
         </RadioContainer>
-      </Card>
-      <Card
+      </StyledCard>
+      <StyledCard
         imageUrl={I8Url.BLACK}
         title="BMW i8"
         subtitle="from $140.700"
@@ -113,8 +71,8 @@ const ModelsView = (props) => {
             onChange={() => undefined}
           />
         </RadioContainer>
-      </Card>
-    </FadeContent>
+      </StyledCard>
+    </StyledFadeContent>
   );
 };
 
