@@ -4,6 +4,7 @@ import './index.css';
 import { ThemeProvider } from 'styled-components';
 import Palette from './theme/Palette';
 import Form from './view/Form';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 ReactDOM.render(
   <React.StrictMode>

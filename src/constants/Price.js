@@ -1,7 +1,8 @@
 import Color from './Color';
+import { ModelType } from './Models';
 
 const Price = {
-  I3: {
+  [ModelType.I3]: {
     DEFAULT: 42400,
     COLOR: {
       [Color.WHITE]: 0,
@@ -9,7 +10,7 @@ const Price = {
       [Color.BLACK]: 550,
     },
   },
-  I8: {
+  [ModelType.I8]: {
     DEFAULT: 140700,
     COLOR: {
       [Color.WHITE]: 1800,

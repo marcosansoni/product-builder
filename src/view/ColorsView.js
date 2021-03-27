@@ -4,9 +4,11 @@ import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { I3Url, I8Url, ModelType } from '../constants/Models';
 import ColorPicker from '../components/colorPicker/ColorPicker';
-import Color from '../constants/Color';
+import Color, { ColorLabelsByModels } from '../constants/Color';
 import Palette from '../theme/Palette';
 import FadeContent from '../components/content/FadeContent';
+import Price from '../constants/Price';
+import thousandsNotation from '../utils/thousandsNotation';
 
 // const enter = keyframes`
 //   from{
@@ -83,19 +85,19 @@ const ColorsView = (props) => {
             <ColorPicker
               color={Palette.WHITE}
               selected={formik.values.color === Color.WHITE}
-              tooltip="White - $0"
+              tooltip={`${ColorLabelsByModels[formik.values.models][Color.WHITE]} - $${thousandsNotation(Price[formik.values.models].COLOR[Color.WHITE])}`}
               onClick={() => formik.setFieldValue('color', Color.WHITE)}
             />
             <ColorPicker
               color={Palette.MINERAL_GRAY}
               selected={formik.values.color === Color.BLACK}
-              tooltip="Mineral Grey - $550"
+              tooltip={`${ColorLabelsByModels[formik.values.models][Color.BLACK]} - $${thousandsNotation(Price[formik.values.models].COLOR[Color.BLACK])}`}
               onClick={() => formik.setFieldValue('color', Color.BLACK)}
             />
             <ColorPicker
               color={Palette.ORANGE_METALLIC}
               selected={formik.values.color === Color.RED}
-              tooltip="Orange Metallic - $550"
+              tooltip={`${ColorLabelsByModels[formik.values.models][Color.RED]} - $${thousandsNotation(Price[formik.values.models].COLOR[Color.RED])}`}
               onClick={() => formik.setFieldValue('color', Color.RED)}
             />
           </>
@@ -105,13 +107,13 @@ const ColorsView = (props) => {
             <ColorPicker
               color={Palette.GREY_METALLIC}
               selected={formik.values.color === Color.BLACK}
-              tooltip="Grey Metallic - $0"
+              tooltip={`${ColorLabelsByModels[formik.values.models][Color.BLACK]} - $${thousandsNotation(Price[formik.values.models].COLOR[Color.BLACK])}`}
               onClick={() => formik.setFieldValue('color', Color.BLACK)}
             />
             <ColorPicker
               color={Palette.WHITE_PERL_METALLIC}
               selected={formik.values.color === Color.WHITE}
-              tooltip="White Perl Metallic - $1.800"
+              tooltip={`${ColorLabelsByModels[formik.values.models][Color.WHITE]} - $${thousandsNotation(Price[formik.values.models].COLOR[Color.WHITE])}`}
               onClick={() => formik.setFieldValue('color', Color.WHITE)}
             />
           </>

@@ -76,7 +76,8 @@ const ModelsView = (props) => {
   const handleClick = (model, color) => {
     if (formik.values.models === model) {
       formik.setFieldValue('models', undefined);
-      return formik.setFieldValue('color', undefined);
+      formik.setFieldValue('color', undefined);
+      return formik.setFieldValue('accessories', []);
     }
     formik.setFieldValue('models', model);
     formik.setFieldValue('color', color);

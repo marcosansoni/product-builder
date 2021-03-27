@@ -10,6 +10,8 @@ import Footer from '../components/footer/Footer';
 import ModelsView from './ModelsView';
 import ColorsView from './ColorsView';
 import MediaQuerySelector from '../theme/MediaQuerySelector';
+import AccessoriesView from './AccessoriesView';
+import SummaryView from './SummaryView';
 
 const Container = styled.div`
   height: 100vh;
@@ -31,6 +33,10 @@ const Title = styled.div`
   ${MediaQuerySelector.BELOW_1480} {
     font-size: 38px;
   }
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+    display: none;
+  }
 `;
 
 const Content = styled.div`
@@ -43,28 +49,37 @@ const Content = styled.div`
   position: relative;
 `;
 
+const MobileTitleContainer = styled.div`
+  padding: 1.8em 0 3em;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  
+  ${MediaQuerySelector.LARGE}{
+    display: none;
+  }
+`;
+
+const MobileTitle = styled.div`
+  font-size: 40px;
+  color: ${(p) => p.theme.BLACK};
+`;
+
+const StepIndicator = styled.div`
+  font-size: 20px;
+  color: ${(p) => p.theme.GRAY};
+`;
+
 const initialValues = {
   models: undefined,
   color: undefined,
-  // name: partner?.name,
-  // territoryId: partner?.territoryId,
-  // logoUrl: undefined,
-  // commitmentReliability: partner?.commitmentReliability,
-  // enabled: partner?.enabled,
+  accessories: [],
 };
 
 const validationSchema = Yup.object().shape({
   models: Yup.string().required(),
   color: Yup.string().required(),
-  // name: Yup.string().required('Required'),
-  // territoryId: Yup.number().required('Required'),
-  // logoUrl: Yup.mixed().test(
-  //   'logoUrl',
-  //   t('partners.errorValidImage'),
-  //   val => isEmpty(val) || (isObject(val) && val.mimeType === 'image/png'),
-  // ),
-  // commitmentReliability: Yup.string(),
-  // enabled: Yup.boolean(),
+  accessories: Yup.array(),
 });
 
 const Form = () => {
@@ -72,24 +87,9 @@ const Form = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handlePrimaryClick = (models) => {
-    console.log(models);
-    if (models === undefined) { // disabled
-      console.log('here');
-      return setOpenSnackbar(true);
-    }
-    return setSelectedPageIndex(selectedPageIndex + 1);
+    if (!models) return setOpenSnackbar(true);
+    return setSelectedPageIndex(Math.min(selectedPageIndex + 1, 3));
   };
-
-  // const renderPage = () => {
-  //   switch (selectedPageIndex) {
-  //     case 0:
-  //       return (<ModelsView onSelect={() => setOpenSnackbar(false)} />);
-  //     case 1:
-  //       return (<ColorsView />);
-  //     default:
-  //       return null;
-  //   }
-  // };
 
   return (
     <>
@@ -101,8 +101,7 @@ const Form = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={() => {
-        }}
+        onSubmit={() => undefined}
       >
         {(formik) => (
           <>
@@ -119,14 +118,18 @@ const Form = () => {
                 }}
                 onSelect={(index) => setSelectedPageIndex(index)}
               />
+              <MobileTitleContainer>
+                <MobileTitle>Select Model</MobileTitle>
+                <StepIndicator>{`Step ${selectedPageIndex + 1} of 4`}</StepIndicator>
+              </MobileTitleContainer>
               <Content>
                 <ModelsView
                   onSelect={() => setOpenSnackbar(false)}
                   visible={selectedPageIndex === 0}
                 />
-                <ColorsView
-                  visible={selectedPageIndex === 1}
-                />
+                <ColorsView visible={selectedPageIndex === 1} />
+                <AccessoriesView visible={selectedPageIndex === 2} />
+                <SummaryView visible={selectedPageIndex === 3} />
               </Content>
               <Footer
                 step={selectedPageIndex}

@@ -1,5 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const enter = keyframes`
   from {
@@ -25,12 +26,12 @@ const exit = keyframes`
 
 const animation = (visible, landing) => {
   if (!visible) {
-    return css`animation: ${exit} 1s ease-in forwards`;
+    return css`animation: ${exit} 0.3s ease-in forwards`;
   }
   if (landing) {
-    return css`animation: ${enter} 1s ease-in forwards`;
+    return css`animation: ${enter} 0.3s ease-in forwards`;
   }
-  return css`animation: ${enter} 1s ease-in 1s forwards`;
+  return css`animation: ${enter} 0.3s ease-in 0.3s forwards`;
 };
 
 const Container = styled.div`
@@ -41,7 +42,7 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  overflow: auto;
+  overflow: ${(p) => (p.visible ? 'auto' : 'hidden')};
   z-index: ${(p) => !p.visible && '-1'};
 
   .visible-first {
@@ -57,13 +58,20 @@ const Container = styled.div`
   }
 `;
 
+const Flex = styled.div`
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const Content = styled.div`
   display: flex;
   opacity: 0;
   overflow: hidden;
   justify-content: space-between;
-  max-width: 1000px;
-  padding: 70px 0 40px;
+  max-width: calc(1000px + 10%);
+  padding: 70px 5% 40px;
   height: fit-content;
   height: -moz-fit-content; /* Firefox/Gecko */
   height: -webkit-fit-content;
@@ -82,9 +90,13 @@ const FadeContent = (props) => {
 
   return (
     <Container visible={visible}>
-      <Content visible={visible} landing={landing} style={style} className={className}>
-        {children}
-      </Content>
+      <PerfectScrollbar options={{ suppressScrollX: true }} style={{ width: '100vw' }}>
+        <Flex>
+          <Content visible={visible} landing={landing} style={style} className={className}>
+            {children}
+          </Content>
+        </Flex>
+      </PerfectScrollbar>
     </Container>
   );
 };

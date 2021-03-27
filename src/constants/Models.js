@@ -1,6 +1,11 @@
 export const ModelType = {
-  I3: 'i3',
-  I8: 'i8',
+  I3: 'I3',
+  I8: 'I8',
+};
+
+export const ModelLabel = {
+  [ModelType.I8]: 'BMW i8',
+  [ModelType.I3]: 'BMW i3',
 };
 
 export const I3Url = {

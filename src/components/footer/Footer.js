@@ -6,6 +6,7 @@ import FooterLeft from './footerLeft/FooterLeft';
 import FooterRight from './footerRight/FooterRight';
 import { I3Url, I8Url, ModelType } from '../../constants/Models';
 import Price from '../../constants/Price';
+import { AccessoriesPricesByModel } from '../../constants/Accessories';
 
 const Container = styled.div`
   height: 100px;
@@ -36,7 +37,6 @@ const Footer = (props) => {
       Array.from(buttonRef.current?.childNodes).forEach((item, index) => {
         // eslint-disable-next-line no-param-reassign
         item.style.visibility = index === step ? 'visible' : 'hidden';
-        // item.style.animation = index === step ? 'visible' : 'hidden';
       });
     }
   }, [step, buttonRef]);
@@ -49,20 +49,15 @@ const Footer = (props) => {
 
   const price = useMemo(() => {
     if (!formik.values.models) return 0;
-    let result = 0;
-    if (formik.values.models === ModelType.I3) {
-      result += Price.I3.DEFAULT;
-      if (formik.values.color) {
-        result += Price.I3.COLOR[formik.values.color];
-      }
-    } else {
-      result += Price.I8.DEFAULT;
-      if (formik.values.color) {
-        result += Price.I8.COLOR[formik.values.color];
-      }
+    let result = Price[formik.values.models].DEFAULT;
+    if (formik.values.color) {
+      result += Price[formik.values.models].COLOR[formik.values.color];
     }
+    formik.values.accessories.forEach((accessory) => {
+      result += AccessoriesPricesByModel[formik.values.models][accessory];
+    });
     return result;
-  }, [formik.values.color, formik.values.models]);
+  }, [formik.values.color, formik.values.models, formik.values.accessories]);
 
   return (
     <Container>

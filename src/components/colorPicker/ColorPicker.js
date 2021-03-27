@@ -97,23 +97,23 @@ const ColorPicker = (props) => {
 
   useEffect(() => {
     const handleInside = () => {
-      arrowRef.current.classList.add('visible');
-      tooltipRef.current.classList.add('visible');
-      arrowRef.current.classList.remove('hidden');
-      tooltipRef.current.classList.remove('hidden');
+      arrowRef.current?.classList.add('visible');
+      tooltipRef.current?.classList.add('visible');
+      arrowRef.current?.classList.remove('hidden');
+      tooltipRef.current?.classList.remove('hidden');
     };
 
     const handleOutside = () => {
-      arrowRef.current.classList.add('hidden');
-      tooltipRef.current.classList.add('hidden');
-      arrowRef.current.classList.remove('visible');
-      tooltipRef.current.classList.remove('visible');
+      arrowRef.current?.classList.add('hidden');
+      tooltipRef.current?.classList.add('hidden');
+      arrowRef.current?.classList.remove('visible');
+      tooltipRef.current?.classList.remove('visible');
     };
 
-    ref.current.addEventListener('mouseover', handleInside);
-    ref.current.addEventListener('touchstart', handleInside);
-    ref.current.addEventListener('mouseout', handleOutside);
-    ref.current.addEventListener('touchend', handleOutside);
+    ref.current?.addEventListener('mouseover', handleInside);
+    ref.current?.addEventListener('touchstart', handleInside);
+    ref.current?.addEventListener('mouseout', handleOutside);
+    ref.current?.addEventListener('touchend', handleOutside);
 
     return () => {
       if (ref.current) {
@@ -127,8 +127,8 @@ const ColorPicker = (props) => {
 
   return (
     <Container ref={ref} onClick={onClick} style={style} className={className}>
-      <Tooltip ref={tooltipRef}>{tooltip}</Tooltip>
-      <Arrow ref={arrowRef} />
+      {tooltip && (<Tooltip ref={tooltipRef}>{tooltip}</Tooltip>)}
+      {tooltip && (<Arrow ref={arrowRef} />)}
       <Color selected={selected} backgroundColor={color} />
     </Container>
   );
