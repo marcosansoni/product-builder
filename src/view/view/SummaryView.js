@@ -1,24 +1,21 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useFormikContext } from 'formik';
-import { useMemo } from 'react';
-import FadeContent from '../components/content/FadeContent';
-import {
-  I3Url, I8Url, ModelLabel, ModelType,
-} from '../constants/Models';
-import ColorPicker from '../components/colorPicker/ColorPicker';
-import { ColorByModels, ColorLabelsByModels } from '../constants/Color';
-import Price from '../constants/Price';
-import thousandsNotation from '../utils/thousandsNotation';
-import { AccessoriesLabel } from '../constants/Accessories';
-import MediaQuerySelector from '../theme/MediaQuerySelector';
+import FadeContent from '../../components/content/FadeContent';
+import { ModelLabel } from '../../constants/Models';
+import ColorPicker from '../../components/colorPicker/ColorPicker';
+import { ColorByModels, ColorLabelsByModels, ColorPriceByModel } from '../../constants/Color';
+import thousandsNotation from '../../utils/thousandsNotation';
+import { AccessoriesLabel } from '../../constants/Accessories';
+import MediaQuerySelector from '../../theme/MediaQuerySelector';
+import useImageUrl from '../../hooks/useImageUrl';
 
 const StyledFadeContent = styled(FadeContent)`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     align-items: flex-start;
   }
 `;
@@ -30,7 +27,7 @@ const Paragraph = styled.div`
   color: ${(p) => p.theme.GRAY};
   margin-bottom: 45px;
 
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     text-align: left;
     font-size: 16px;
   }
@@ -49,7 +46,7 @@ const Subtitle = styled.div`
   color: ${(p) => p.theme.BLACK};
   margin-bottom: 20px;
 
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     font-size: 16px;
   }
 `;
@@ -66,7 +63,7 @@ const Title = styled.div`
   font-weight: 700;
   color: ${(p) => p.theme.BLACK};
 
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     font-size: 24px;
   }
 `;
@@ -76,7 +73,7 @@ const ColorContainer = styled.div`
   align-items: center;
   padding-bottom: 72px;
 
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     padding-bottom: 32px;
   }
 `;
@@ -85,13 +82,13 @@ const ColorDescription = styled.div`
   font-size: 24px;
   margin-left: 4px;
 
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     font-size: 18px;
   }
 `;
 
 const AccessoryList = styled.ul`
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     padding-left: 16px;
   }
 `;
@@ -100,41 +97,38 @@ const Item = styled.li`
   font-size: 18px;
   line-height: 28px;
   color: ${(p) => p.theme.GRAY};
-  
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     font-size: 16px;
   }
-  
-  ::marker{};
+
+  ::marker {
+  }
+;
 `;
 
 const StyledColorPicker = styled(ColorPicker)`
   cursor: auto;
   margin: 0 8px 0 0;
-  
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     width: 36px;
     height: 36px;
   }
 `;
 
 const SummaryView = (props) => {
-  const { visible } = props;
+  const { visible, dataTest } = props;
   const formik = useFormikContext();
   const { accessories, models, color } = formik.values;
 
-  const imageUrl = useMemo(() => {
-    if (!models) return undefined;
-    if (models === ModelType.I3) return I3Url[color];
-    return I8Url[color];
-  }, [color, models]);
-
+  const imageUrl = useImageUrl();
   return (
-    <StyledFadeContent visible={visible}>
+    <StyledFadeContent visible={visible} dataTest={`${dataTest}-summary`}>
       <Separator />
       <Subtitle>MODEL</Subtitle>
-      <Image src={imageUrl} />
-      <Title>{ModelLabel[models]}</Title>
+      <Image data-test={`${dataTest}-summary-image`} src={imageUrl} />
+      <Title data-test={`${dataTest}-summary-title`}>{ModelLabel[models]}</Title>
       <Paragraph>
         Lorem ipsum dolor sit amet,
         consectetur adipisicing elit.
@@ -146,19 +140,19 @@ const SummaryView = (props) => {
       <Separator />
       <Subtitle>COLOR</Subtitle>
       <ColorContainer>
-        <StyledColorPicker color={ColorByModels?.[models]?.[color]} />
-        <ColorDescription>
-          {`${ColorLabelsByModels?.[models]?.[color]} - $${thousandsNotation(Price?.[models]?.COLOR?.[color])}`}
+        <StyledColorPicker color={ColorByModels?.[models]?.[color]} dataTest={`${dataTest}-summary`} />
+        <ColorDescription data-test={`${dataTest}-summary-price`}>
+          {`${ColorLabelsByModels?.[models]?.[color]} - $${thousandsNotation(ColorPriceByModel?.[models]?.[color])}`}
         </ColorDescription>
       </ColorContainer>
       <Separator />
       <Subtitle>ACCESSORIES</Subtitle>
       <AccessoryList>
         {accessories.map((accessory) => (
-          <Item>{AccessoriesLabel[accessory]}</Item>
+          <Item data-test={`${dataTest}-summary-${accessory}`}>{AccessoriesLabel[accessory]}</Item>
         ))}
         {accessories.length === 0 && (
-          <Item>No accessories selected</Item>
+          <Item data-test={`${dataTest}-summary-no-accessory`}>No accessories selected</Item>
         )}
       </AccessoryList>
     </StyledFadeContent>
@@ -166,12 +160,15 @@ const SummaryView = (props) => {
 };
 
 SummaryView.propTypes = {
-  /** Representing if the section is showed */
+  /** If visible content is rendered, used into FadeContent */
   visible: PropTypes.bool,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 SummaryView.defaultProps = {
   visible: false,
+  dataTest: undefined,
 };
 
 export default SummaryView;

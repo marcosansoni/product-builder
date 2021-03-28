@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
-import ButtonType from '../../button/constants/ButtonType';
-import Button from '../../button/Button';
+import ButtonType from '../../../components/button/constants/ButtonType';
+import Button from '../../../components/button/Button';
 import Palette from '../../../theme/Palette';
 import AngleLeftIcon from '../../../icon/AngleLeftIcon';
 import AngleRightIcon from '../../../icon/AngleRightIcon';
@@ -96,7 +96,7 @@ const ContainerSecondaryItems = styled(ContainerItems)`
 
 const FooterRight = (props) => {
   const {
-    onConfirm, secondaryEnabled, primaryDisabled, onSecondary, step,
+    onConfirm, secondaryEnabled, primaryDisabled, onSecondary, step, dataTest,
   } = props;
 
   const primaryRef = useRef();
@@ -122,27 +122,29 @@ const FooterRight = (props) => {
     <Container>
       <StyledSecondaryButton
         type={ButtonType.SECONDARY}
+        dataTest={`${dataTest}-secondary`}
         onClick={onSecondary}
         secondaryEnabled={secondaryEnabled}
       >
         <IconContainer secondary><AngleLeftIcon color={Palette.GRAY} /></IconContainer>
         <ContainerSecondaryItems ref={secondaryRef}>
           <Item />
-          <Item>MODELS</Item>
-          <Item>COLORS</Item>
-          <Item>ACCESSORIES</Item>
+          <Item data-test={`${dataTest}-secondary-models`}>MODELS</Item>
+          <Item data-test={`${dataTest}-secondary-colors`}>COLORS</Item>
+          <Item data-test={`${dataTest}-secondary-accessories`}>ACCESSORIES</Item>
         </ContainerSecondaryItems>
       </StyledSecondaryButton>
       <StyledPrimaryButton
         secondaryEnabled={secondaryEnabled}
         onClick={onConfirm}
         disabled={primaryDisabled}
+        dataTest={`${dataTest}-primary`}
       >
         <ContainerItems ref={primaryRef}>
-          <Item>COLORS</Item>
-          <Item>ACCESSORIES</Item>
-          <Item>SUMMARY</Item>
-          <Item>BUY NOW</Item>
+          <Item data-test={`${dataTest}-primary-colors`}>COLORS</Item>
+          <Item data-test={`${dataTest}-primary-accessories`}>ACCESSORIES</Item>
+          <Item data-test={`${dataTest}-primary-summary`}>SUMMARY</Item>
+          <Item data-test={`${dataTest}-primary-buy`}>BUY NOW</Item>
         </ContainerItems>
         <IconContainer><AngleRightIcon /></IconContainer>
       </StyledPrimaryButton>
@@ -161,6 +163,8 @@ FooterRight.propTypes = {
   secondaryEnabled: PropTypes.bool,
   /** If primary button is disabled */
   primaryDisabled: PropTypes.bool,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 FooterRight.defaultProps = {
@@ -169,6 +173,7 @@ FooterRight.defaultProps = {
   onConfirm: undefined,
   secondaryEnabled: false,
   primaryDisabled: false,
+  dataTest: undefined,
 };
 
 export default FooterRight;

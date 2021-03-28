@@ -6,12 +6,12 @@ import { Formik } from 'formik';
 import { Snackbar } from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
 import Tabs from '../components/tab/Tabs';
-import Footer from '../components/footer/Footer';
-import ModelsView from './ModelsView';
-import ColorsView from './ColorsView';
+import Footer from './footer/Footer';
+import ModelsView from './view/ModelsView';
+import ColorsView from './view/ColorsView';
 import MediaQuerySelector from '../theme/MediaQuerySelector';
-import AccessoriesView from './AccessoriesView';
-import SummaryView from './SummaryView';
+import AccessoriesView from './view/AccessoriesView';
+import SummaryView from './view/SummaryView';
 
 const Container = styled.div`
   height: 100vh;
@@ -30,7 +30,7 @@ const Title = styled.div`
   width: 100%;
   text-align: center;
 
-  ${MediaQuerySelector.BELOW_1480} {
+  ${MediaQuerySelector.EXTRA_LARGE} {
     font-size: 38px;
   }
 
@@ -98,6 +98,8 @@ const validationSchema = Yup.object().shape({
   accessories: Yup.array(),
 });
 
+const dataTest = 'form';
+
 const Form = () => {
   const [selectedPageIndex, setSelectedPageIndex] = useState(0);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -122,8 +124,9 @@ const Form = () => {
         {(formik) => (
           <>
             <Container>
-              <Title>Product Builder</Title>
+              <Title data-test={`${dataTest}-title`}>Product Builder</Title>
               <Tabs
+                dataTest={dataTest}
                 tabs={['MODELS', 'COLORS', 'ACCESSORIES', 'SUMMARY']}
                 defaultSelected={selectedPageIndex}
                 disabled={!formik.values.models}
@@ -135,24 +138,28 @@ const Form = () => {
                 onSelect={(index) => setSelectedPageIndex(index)}
               />
               <MobileTitleContainer>
-                <MobileTitle>
+                <MobileTitle data-test={`${dataTest}-title-mobile`}>
                   {selectedPageIndex === 0 && 'Select Model'}
                   {selectedPageIndex === 1 && 'Select Color'}
                   {selectedPageIndex === 2 && 'Accessories'}
                   {selectedPageIndex === 3 && 'Summary'}
                 </MobileTitle>
-                <StepIndicator>{`Step ${selectedPageIndex + 1} of 4`}</StepIndicator>
+                <StepIndicator data-test={`${dataTest}-steps-mobile`}>
+                  {`Step ${selectedPageIndex + 1} of 4`}
+                </StepIndicator>
               </MobileTitleContainer>
               <Content>
                 <ModelsView
+                  dataTest={dataTest}
                   onSelect={() => setOpenSnackbar(false)}
                   visible={selectedPageIndex === 0}
                 />
-                <ColorsView visible={selectedPageIndex === 1} />
-                <AccessoriesView visible={selectedPageIndex === 2} />
-                <SummaryView visible={selectedPageIndex === 3} />
+                <ColorsView visible={selectedPageIndex === 1} dataTest={dataTest} />
+                <AccessoriesView visible={selectedPageIndex === 2} dataTest={dataTest} />
+                <SummaryView visible={selectedPageIndex === 3} dataTest={dataTest} />
               </Content>
               <Footer
+                dataTest={dataTest}
                 step={selectedPageIndex}
                 onConfirm={() => handlePrimaryClick(formik.values.models)}
                 primaryDisabled={formik.values.models === undefined}

@@ -69,7 +69,7 @@ const Content = styled.div`
 `;
 
 const FooterLeft = (props) => {
-  const { imageUrl, price } = props;
+  const { imageUrl, price, dataTest } = props;
   const ref = useRef();
 
   useEffect(() => {
@@ -85,10 +85,10 @@ const FooterLeft = (props) => {
   return (
     <Container>
       <Content ref={ref}>
-        <Image src={imageUrl} />
+        <Image src={imageUrl} data-test={`${dataTest}-image`} />
         <PriceContainer>
           <Title>Total</Title>
-          <Price>{`$${price}`}</Price>
+          <Price data-test={`${dataTest}-price`}>{`$${price}`}</Price>
         </PriceContainer>
       </Content>
     </Container>
@@ -100,10 +100,13 @@ FooterLeft.propTypes = {
   imageUrl: PropTypes.string,
   /** Price of the checkout */
   price: PropTypes.number,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 FooterLeft.defaultProps = {
   imageUrl: undefined,
+  dataTest: undefined,
   price: undefined,
 };
 

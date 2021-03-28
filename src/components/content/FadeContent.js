@@ -95,7 +95,7 @@ const FadeContent = (props) => {
   } = props;
 
   return (
-    <Container visible={visible} data-test={`${dataTest}-content`}>
+    <Container visible={visible} data-test={`${dataTest}-content`} data-visible={visible}>
       <PerfectScrollbar options={{ suppressScrollX: true }} style={{ width: '100vw' }}>
         <Flex>
           <Content visible={visible} landing={landing} style={style} className={className}>

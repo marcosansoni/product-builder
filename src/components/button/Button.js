@@ -54,6 +54,7 @@ const Button = (props) => {
   return (
     <Container
       data-test={`${dataTest}-button`}
+      data-disabled={disabled}
       disabled={disabled}
       style={style}
       className={className}

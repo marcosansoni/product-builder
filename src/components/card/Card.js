@@ -44,9 +44,16 @@ const Card = (props) => {
   } = props;
 
   return (
-    <Container selected={selected} onClick={onClick} style={style} className={className}>
-      {title && (<Title data-test={`${dataTest}-title`}>{title}</Title>)}
-      {imageUrl && (<Image src={imageUrl} data-test={`${dataTest}-image`} />)}
+    <Container
+      selected={selected}
+      onClick={onClick}
+      style={style}
+      className={className}
+      data-test={`${dataTest}-card`}
+      data-selected={selected}
+    >
+      {title && (<Title data-test={`${dataTest}-card-title`}>{title}</Title>)}
+      {imageUrl && (<Image src={imageUrl} data-test={`${dataTest}-card-image`} />)}
       {subtitle && (<Subtitle data-test={`${dataTest}-subtitle`}>{subtitle}</Subtitle>)}
       {children}
     </Container>

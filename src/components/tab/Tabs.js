@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const Tabs = (props) => {
   const {
-    tabs, defaultSelected, disabled, onDisableClick, onSelect,
+    tabs, defaultSelected, disabled, onDisableClick, onSelect, dataTest,
   } = props;
   const [selected, setSelected] = useState(defaultSelected);
 
@@ -33,10 +33,14 @@ const Tabs = (props) => {
   };
 
   return (
-    <Container>
+    <Container
+      data-test={`${dataTest}-tabs`}
+    >
       {tabs.map((tab, index) => (
         <Tab
+          key={tab}
           onClick={() => handleClick(index)}
+          dataTest={`${dataTest}-tabs-tab`}
           selected={index === selected}
           disabled={index !== selected && disabled}
         >
@@ -58,11 +62,14 @@ Tabs.propTypes = {
   onDisableClick: PropTypes.func,
   /** Callback used when we click on a tab */
   onSelect: PropTypes.func,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 Tabs.defaultProps = {
   tabs: [],
   defaultSelected: undefined,
+  dataTest: undefined,
   disabled: false,
   onDisableClick: undefined,
   onSelect: undefined,

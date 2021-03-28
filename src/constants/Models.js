@@ -18,3 +18,8 @@ export const I8Url = {
   BLACK: 'img/i8/product02_col01.jpg',
   WHITE: 'img/i8/product02_col02.jpg',
 };
+
+export const PriceByModel = {
+  [ModelType.I3]: 42400,
+  [ModelType.I8]: 140700,
+};

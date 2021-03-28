@@ -5,7 +5,7 @@ export default {
   component: Tabs,
   args: {
     tabs: ['Models', 'Colors', 'Accessories', 'Summary'],
-    defaultSelected: undefined,
+    defaultSelected: 0,
   },
 };
 

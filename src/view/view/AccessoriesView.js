@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useFormikContext } from 'formik';
-import FadeContent from '../components/content/FadeContent';
-import Card from '../components/card/Card';
-import CheckButton from '../components/radioButton/CheckButton';
-import { AccessoriesLabel, AccessoriesPricesByModel } from '../constants/Accessories';
-import MediaQuerySelector from '../theme/MediaQuerySelector';
+import FadeContent from '../../components/content/FadeContent';
+import Card from '../../components/card/Card';
+import CheckButton from '../../components/radioButton/CheckButton';
+import { AccessoriesLabel, AccessoriesPricesByModel } from '../../constants/Accessories';
+import MediaQuerySelector from '../../theme/MediaQuerySelector';
 
 const StyledFadeContent = styled(FadeContent)`
   flex-direction: column;
@@ -65,45 +65,56 @@ const Label = styled.div`
 `;
 
 const AccessoriesView = (props) => {
-  const { visible } = props;
+  const { visible, dataTest } = props;
   const formik = useFormikContext();
-  const { accessories } = formik.values;
+  const { accessories, models } = formik.values;
 
   const handleClickCard = (accessory) => {
     if (accessories.includes(accessory)) {
-      return formik.setFieldValue('accessories', formik.values.accessories.filter((acc) => acc !== accessory));
+      return formik.setFieldValue('accessories', accessories.filter((acc) => acc !== accessory));
     }
-    return formik.setFieldValue('accessories', [...formik.values.accessories, accessory]);
+    return formik.setFieldValue('accessories', [...accessories, accessory]);
   };
 
   const renderCard = (accessory) => (
     <StyledCard
+      dataTest={`${dataTest}-accessories-${accessory}`}
       selected={accessories.includes(accessory)}
       onClick={() => handleClickCard(accessory)}
     >
-      <Label>{AccessoriesLabel[accessory]}</Label>
+      <Label dataTest={`${dataTest}-accessories-${accessory}-label`}>
+        {AccessoriesLabel[accessory]}
+      </Label>
       <Right>
-        <Price>{`$${AccessoriesPricesByModel[formik.values.models][accessory]}`}</Price>
-        <CheckButton selected={accessories.includes(accessory)} squared />
+        <Price dataTest={`${dataTest}-accessories-${accessory}-price`}>
+          {`$${AccessoriesPricesByModel[models][accessory]}`}
+        </Price>
+        <CheckButton
+          dataTest={`${dataTest}-accessories-${accessory}`}
+          selected={accessories.includes(accessory)}
+          squared
+        />
       </Right>
     </StyledCard>
   );
 
   return (
-    <StyledFadeContent visible={visible}>
-      {formik.values.models
-      && Object.keys(AccessoriesPricesByModel[formik.values.models]).map(renderCard)}
+    <StyledFadeContent visible={visible} dataTest={`${dataTest}-accessories`}>
+      {models && Object.keys(AccessoriesPricesByModel[models]).map(renderCard)}
     </StyledFadeContent>
   );
 };
 
 AccessoriesView.propTypes = {
-  /** Representing if the section is showed */
+  /** If visible content is rendered, used into FadeContent */
   visible: PropTypes.bool,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 AccessoriesView.defaultProps = {
   visible: false,
+  dataTest: undefined,
 };
 
 export default AccessoriesView;

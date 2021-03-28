@@ -4,10 +4,9 @@ import { useMemo } from 'react';
 import { useFormikContext } from 'formik';
 import FooterLeft from './footerLeft/FooterLeft';
 import FooterRight from './footerRight/FooterRight';
-import { I3Url, I8Url, ModelType } from '../../constants/Models';
-import Price from '../../constants/Price';
-import { AccessoriesPricesByModel } from '../../constants/Accessories';
 import MediaQuerySelector from '../../theme/MediaQuerySelector';
+import useImageUrl from '../../hooks/useImageUrl';
+import usePrice from '../../hooks/usePrice';
 
 const enter = keyframes`
   from {
@@ -28,11 +27,6 @@ const leave = keyframes`
     height: 0;
     transform: translateY(56px);
   }
-  //99%{
-  //  opacity: 0;
-  //  height: 56px;
-  //  transform: translateY(56px);
-  //}
   0% {
     opacity: 1;
     height: 56px;
@@ -65,34 +59,21 @@ const Container = styled.div`
 
 const Footer = (props) => {
   const {
-    step, onConfirm, primaryDisabled, onSecondary,
+    step, onConfirm, primaryDisabled, onSecondary, dataTest,
   } = props;
   const formik = useFormikContext();
+  const { models } = formik.values;
 
-  const imageUrl = useMemo(() => {
-    if (!formik.values.models) return undefined;
-    if (formik.values.models === ModelType.I3) return I3Url[formik.values.color];
-    return I8Url[formik.values.color];
-  }, [formik.values.color, formik.values.models]);
+  const imageUrl = useImageUrl();
+  const price = usePrice();
 
-  const price = useMemo(() => {
-    if (!formik.values.models) return 0;
-    let result = Price[formik.values.models].DEFAULT;
-    if (formik.values.color) {
-      result += Price[formik.values.models].COLOR[formik.values.color];
-    }
-    formik.values.accessories.forEach((accessory) => {
-      result += AccessoriesPricesByModel[formik.values.models][accessory];
-    });
-    return result;
-  }, [formik.values.color, formik.values.models, formik.values.accessories]);
-
-  console.log(!!formik.values.models);
+  const dt = useMemo(() => `${dataTest}-footer`, [dataTest]);
 
   return (
-    <Container visible={!!formik.values.models}>
-      <FooterLeft imageUrl={imageUrl} price={price} />
+    <Container visible={!!models} data-test={dt} data-visible={!!models}>
+      <FooterLeft imageUrl={imageUrl} price={price} dataTest={dt} />
       <FooterRight
+        dataTest={dt}
         step={step}
         onConfirm={onConfirm}
         primaryDisabled={primaryDisabled}
@@ -112,12 +93,15 @@ Footer.propTypes = {
   onSecondary: PropTypes.func,
   /** If primary button is disabled */
   primaryDisabled: PropTypes.bool,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 Footer.defaultProps = {
   step: 0,
   onConfirm: undefined,
   onSecondary: undefined,
+  dataTest: undefined,
   primaryDisabled: false,
 };
 

@@ -26,10 +26,14 @@ const Container = styled.div`
 
 const Tab = (props) => {
   const {
-    children, selected, disabled, onClick,
+    children, selected, disabled, onClick, dataTest,
   } = props;
+
   return (
     <Container
+      data-selected={selected}
+      data-disabled={disabled}
+      dataTest={`${dataTest}-${children}`}
       selected={selected}
       disabled={disabled}
       onClick={onClick}
@@ -48,10 +52,13 @@ Tab.propTypes = {
   disabled: PropTypes.bool,
   /** Callback triggered at on click on tab item */
   onClick: PropTypes.func,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 Tab.defaultProps = {
   children: undefined,
+  dataTest: undefined,
   selected: false,
   disabled: false,
   onClick: undefined,

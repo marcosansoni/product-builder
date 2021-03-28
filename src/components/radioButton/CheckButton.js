@@ -79,7 +79,9 @@ const ContainerIcon = styled.div`
 `;
 
 const CheckButton = (props) => {
-  const { selected, onChange, squared } = props;
+  const {
+    selected, onChange, squared, dataTest,
+  } = props;
   const ref = useRef();
 
   useEffect(() => {
@@ -93,7 +95,7 @@ const CheckButton = (props) => {
   }, [selected]);
 
   return (
-    <Container onClick={onChange}>
+    <Container onClick={onChange} data-test={`${dataTest}-checkbox`} data-selected={selected}>
       <Background ref={ref} squared={squared} />
       <ContainerIcon>
         <CheckIcon />
@@ -109,10 +111,13 @@ CheckButton.propTypes = {
   selected: PropTypes.bool,
   /** Callback at onChange of the button */
   onChange: PropTypes.func,
+  /** data-test attr */
+  dataTest: PropTypes.string,
 };
 
 CheckButton.defaultProps = {
   onChange: undefined,
+  dataTest: undefined,
   selected: false,
   squared: false,
 };

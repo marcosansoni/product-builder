@@ -128,7 +128,14 @@ const ColorPicker = (props) => {
   }, [ref]);
 
   return (
-    <Container ref={ref} onClick={onClick} style={style} className={className}>
+    <Container
+      ref={ref}
+      onClick={onClick}
+      style={style}
+      className={className}
+      data-test={`${dataTest}-container`}
+      data-selected={selected}
+    >
       {tooltip && (<Tooltip ref={tooltipRef} data-test={`${dataTest}-tooltip`}>{tooltip}</Tooltip>)}
       {tooltip && (<Arrow ref={arrowRef} />)}
       <Color selected={selected} backgroundColor={color} data-test={`${dataTest}-color`} />

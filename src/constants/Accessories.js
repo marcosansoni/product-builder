@@ -27,5 +27,3 @@ export const AccessoriesPricesByModel = {
     [Accessories.BMW_ONE_YEAR]: 975,
   },
 };
-
-export default Accessories;

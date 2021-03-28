@@ -31,4 +31,16 @@ export const ColorLabelsByModels = {
   },
 };
 
+export const ColorPriceByModel = {
+  [ModelType.I3]: {
+    [Color.WHITE]: 0,
+    [Color.RED]: 550,
+    [Color.BLACK]: 550,
+  },
+  [ModelType.I8]: {
+    [Color.WHITE]: 1800,
+    [Color.BLACK]: 0,
+  },
+};
+
 export default Color;
