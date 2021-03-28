@@ -1,0 +1,17 @@
+{
+  "componentFolder": "src",
+  "ignoreTestFiles": [
+    "**/__snapshots__/*",
+    "**/__image_snapshots__/*"
+  ],
+  "testFiles": "**/*.spec.js",
+  "videosFolder": ".cypress/videos",
+  "video": false,
+  "viewportWidth": 1280,
+  "viewportHeight": 720,
+  "baseUrl": "http://localhost:3000",
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  }
+}
