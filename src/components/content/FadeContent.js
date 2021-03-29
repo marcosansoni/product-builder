@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign,no-underscore-dangle */
 import styled, { css, keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -41,8 +42,6 @@ const Container = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
   overflow: ${(p) => (p.visible ? 'auto' : 'hidden')};
   z-index: ${(p) => !p.visible && '-1'};
 
@@ -96,7 +95,33 @@ const FadeContent = (props) => {
 
   return (
     <Container visible={visible}>
-      <PerfectScrollbar options={{ suppressScrollX: true }} style={{ width: '100vw' }}>
+      <PerfectScrollbar
+        options={{ suppressScrollX: true }}
+        containerRef={(ref) => {
+          if (ref) {
+            // https://github.com/mdbootstrap/perfect-scrollbar/pull/934/files
+            // injecting a fix for this issue
+            ref._getBoundingClientRect = ref.getBoundingClientRect;
+
+            ref.getBoundingClientRect = () => {
+              const original = ref._getBoundingClientRect();
+
+              return {
+                bottom: original.bottom,
+                left: original.left,
+                right: original.right,
+                top: original.top,
+                width: Math.round(original.width),
+                _width: original.width,
+                height: Math.round(original.height),
+                _height: original.height,
+                x: original.x,
+                y: original.y,
+              };
+            };
+          }
+        }}
+      >
         <Flex>
           <Content
             visible={visible}
