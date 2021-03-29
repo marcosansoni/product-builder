@@ -78,8 +78,8 @@ const Content = styled.div`
   height: -webkit-fit-content;
   transition: opacity 0.3s ease-in;
   ${(p) => animation(p.visible, p.landing)};
-  
-  ${MediaQuerySelector.SMALL_AND_MEDIUM}{
+
+  ${MediaQuerySelector.SMALL_AND_MEDIUM} {
     padding-top: 0;
   }
 `;
@@ -95,10 +95,17 @@ const FadeContent = (props) => {
   } = props;
 
   return (
-    <Container visible={visible} data-test={`${dataTest}-content`} data-visible={visible}>
+    <Container visible={visible}>
       <PerfectScrollbar options={{ suppressScrollX: true }} style={{ width: '100vw' }}>
         <Flex>
-          <Content visible={visible} landing={landing} style={style} className={className}>
+          <Content
+            visible={visible}
+            landing={landing}
+            style={style}
+            className={className}
+            data-test={`${dataTest}-content`}
+            data-visible={visible}
+          >
             {children}
           </Content>
         </Flex>

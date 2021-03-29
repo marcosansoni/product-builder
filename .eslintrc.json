@@ -27,8 +27,13 @@
         {
             "files": ["*.stories.js"],
             "rules": {
-                "react/jsx-props-no-spreading": "off",
-                "no-unused-vars": "off"
+                "react/jsx-props-no-spreading": "off"
+            }
+        },
+        {
+            "files": ["*.spec.js"],
+            "rules": {
+                "no-undef": "off"
             }
         }
     ]

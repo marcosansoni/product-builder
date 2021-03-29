@@ -140,7 +140,7 @@ const SummaryView = (props) => {
       <Separator />
       <Subtitle>COLOR</Subtitle>
       <ColorContainer>
-        <StyledColorPicker color={ColorByModels?.[models]?.[color]} dataTest={`${dataTest}-summary`} />
+        <StyledColorPicker color={ColorByModels?.[models]?.[color]} dataTest={`${dataTest}-summary-${color}`} />
         <ColorDescription data-test={`${dataTest}-summary-price`}>
           {`${ColorLabelsByModels?.[models]?.[color]} - $${thousandsNotation(ColorPriceByModel?.[models]?.[color])}`}
         </ColorDescription>

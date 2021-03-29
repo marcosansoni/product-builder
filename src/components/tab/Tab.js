@@ -33,7 +33,7 @@ const Tab = (props) => {
     <Container
       data-selected={selected}
       data-disabled={disabled}
-      dataTest={`${dataTest}-${children}`}
+      data-test={`${dataTest}-${children}`}
       selected={selected}
       disabled={disabled}
       onClick={onClick}

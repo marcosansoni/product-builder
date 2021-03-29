@@ -86,6 +86,12 @@ const StepIndicator = styled.div`
   }
 `;
 
+const StyledSnackbar = styled(Snackbar)`
+  .MuiSnackbarContent-message{
+    font-size: 16px;
+  }
+`;
+
 const initialValues = {
   models: undefined,
   color: undefined,
@@ -111,7 +117,8 @@ const Form = () => {
 
   return (
     <>
-      <Snackbar
+      <StyledSnackbar
+        className="snackbar"
         open={openSnackbar}
         TransitionComponent={(p) => (<Slide {...p} direction="up" />)}
         message="Please, select a model first!"
